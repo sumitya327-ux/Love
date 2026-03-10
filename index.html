@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Lookup Tool</title>
+    <style>
+        /* CSS Styling - Website ko sundar banane ke liye */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box; /* Padding ko width ke andar rakhta hai */
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input[type="number"]:focus {
+            border-color: #007bff;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Result Section */
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none; /* Shuru mein chhupa rahega */
+        }
+
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Loading Spinner */
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+            display: none;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>📞 Number Lookup</h2>
+        <p style="color: #666; font-size: 14px;">Enter mobile number to check details</p>
+        
+        <div class="input-group">
+            <input type="number" id="phoneNumber" placeholder="Enter 10 digit number (e.g. 9876543210)">
+        </div>
+
+        <button onclick="searchNumber()">Search Details</button>
+
+        <div class="loader" id="loader"></div>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        // JavaScript Logic
+        function searchNumber() {
+            const numberInput = document.getElementById('phoneNumber').value;
+            const resultDiv = document.getElementById('result');
+            const loader = document.getElementById('loader');
+
+            // 1. Validation: Check karo ki input khali to nahi hai
+            if (numberInput.length !== 10) {
+                resultDiv.style.display = 'block';
+                resultDiv.className = 'error';
+                resultDiv.innerHTML = "⚠️ Please enter a valid 10-digit number.";
+                return;
+            }
+
+            // 2. Loading dikhao
+            resultDiv.style.display = 'none';
+            loader.style.display = 'block';
+
+            // 3. Fake API Call Simulation (2 second ka delay)
+            setTimeout(() => {
+                loader.style.display = 'none';
+                resultDiv.style.display = 'block';
+                resultDiv.className = 'success';
+
+                // Yahan hum fake data dikhayenge kyunki real API nahi hai
+                // Aap yahan apna logic laga sakte hain agar database ho
+                resultDiv.innerHTML = `
+                    <h3>✅ Number Found!</h3>
+                    <p><strong>Number:</strong> ${numberInput}</p>
+                    <p><strong>Owner Name:</strong> Rahul Sharma</p>
+                    <p><strong>Location:</strong> New Delhi, India</p>
+                    <p><strong>Circle:</strong> Jio (Jharkhand)</p>
+                    <p><strong>Carrier:</strong> Mobile</p>
+                `;
+            }, 2000); // 2000ms = 2 seconds delay
+        }
+    </script>
+
+</body>
+</html>
